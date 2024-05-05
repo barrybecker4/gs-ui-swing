@@ -61,7 +61,7 @@ public class TestManySprite implements ViewerListener {
 	SpriteManager sprites = null;
 
 	int NODE_COUNT = 1000;
-	int SPRITE_COUNT = 500;
+	int SPRITE_COUNT = 5000;
 	
 	private void run() {
 		graph  = new MultiGraph( "TestSprites" );
@@ -126,10 +126,11 @@ public class TestManySprite implements ViewerListener {
 		sprites.setSpriteFactory( new TestSpriteFactory() );
 
 		for( int i = 0 ; i < SPRITE_COUNT ; i++ ) {
-			sprites.addSprite( i+"" );
+			Sprite sprite = sprites.addSprite( i + "" );
+            sprite.setPosition(Math.random());
 		}
 
-		sprites.forEach ( s ->s.attachToEdge( randomEdge( graph ).getId() ));
+		sprites.forEach ( s -> s.attachToEdge( randomEdge( graph ).getId() ));
 	}
 
 
