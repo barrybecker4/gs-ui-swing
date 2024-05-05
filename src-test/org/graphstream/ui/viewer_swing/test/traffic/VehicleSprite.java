@@ -6,10 +6,10 @@ import org.graphstream.graph.Node;
 import org.graphstream.ui.spriteManager.Sprite;
 import org.graphstream.ui.spriteManager.SpriteManager;
 
-class TestSprite extends Sprite {
+class VehicleSprite extends Sprite {
     double dir = 0.01f;
 
-    public TestSprite(String identifier, SpriteManager manager) {
+    public VehicleSprite(String identifier, SpriteManager manager) {
         super(identifier, manager);
     }
 

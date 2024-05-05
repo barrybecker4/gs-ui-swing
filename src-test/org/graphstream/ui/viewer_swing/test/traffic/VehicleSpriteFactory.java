@@ -6,9 +6,9 @@ import org.graphstream.ui.spriteManager.SpriteFactory;
 import org.graphstream.ui.spriteManager.SpriteManager;
 
 
-class TestSpriteFactory extends SpriteFactory {
+class VehicleSpriteFactory extends SpriteFactory {
     @Override
     public Sprite newSprite(String identifier, SpriteManager manager, Values position) {
-        return new TestSprite(identifier, manager);
+        return new VehicleSprite(identifier, manager);
     }
 }
