@@ -5,6 +5,11 @@ import org.graphstream.ui.view.Viewer;
 import org.graphstream.ui.view.ViewerListener;
 import org.graphstream.ui.view.ViewerPipe;
 
+import javax.swing.JFrame;
+import java.awt.Dimension;
+import java.awt.Frame;
+
+
 public class TrafficDemo implements ViewerListener {
     
     public static void main(String[] args) {
@@ -21,6 +26,9 @@ public class TrafficDemo implements ViewerListener {
         Graph graph = new TrafficGraphGenerator().generateGraph();
 
         Viewer viewer = graph.display(false );
+
+        setViewerSize(1200, 900, viewer);
+
         ViewerPipe pipeIn = viewer.newViewerPipe();
 
         pipeIn.addAttributeSink( graph );
@@ -39,7 +47,15 @@ public class TrafficDemo implements ViewerListener {
         System.exit(0);
     }
 
-    protected void sleep( long ms ) {
+    private void setViewerSize(int width, int height, Viewer viewer) {
+        viewer.getDefaultView().openInAFrame(true);
+        Frame frame = JFrame.getFrames()[JFrame.getFrames().length - 1];
+        frame.setPreferredSize(new Dimension(width, height));
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    private void sleep( long ms ) {
         try {
             Thread.sleep( ms );
         } catch (InterruptedException e) { e.printStackTrace(); }

@@ -1,6 +1,8 @@
 package org.graphstream.ui.viewer_swing.test.traffic;
 
+import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
+import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.MultiGraph;
 
 import java.io.IOException;
@@ -20,7 +22,7 @@ public class TrafficGraphGenerator {
 
         populateGraph(graph);
 
-        graph.setAttribute( "ui.quality" );
+        graph.setAttribute("ui.quality" );
         graph.setAttribute("ui.stylesheet", loadStyleSheet());
 
         return graph;
@@ -30,7 +32,8 @@ public class TrafficGraphGenerator {
         graph.addNode("A");
         graph.addNode("B");
         graph.addNode("C");
-        graph.addNode("D");
+        //graph.addNode("D");
+
         graph.addEdge("AB", "A", "B", true);
         graph.addEdge("BA", "B", "A", true);
         graph.addEdge("BC", "B", "C", true);
@@ -38,17 +41,60 @@ public class TrafficGraphGenerator {
         graph.addEdge("CA", "C", "A", true);
         graph.addEdge("AC", "A", "C", true);
 
-        graph.addEdge("DA", "D", "A", true);
-        graph.addEdge("DB", "D", "B", true);
-        graph.addEdge("DC", "D", "C", true);
-        graph.addEdge("AD", "A", "D", true);
-        graph.addEdge("BD", "B", "D", true);
-        graph.addEdge("CD", "C", "D", true);
+        // Replacing node D with the modelling of an intersection
+        graph.addNode("D1");
+        graph.addNode("D2");
+        graph.addNode("D3");
+        graph.addNode("D4");
+        graph.addNode("D5");
+        graph.addNode("D6");
 
-        graph.getNode("A").setAttribute("xyz", -1.5, -1.1, 0 );
-        graph.getNode("B").setAttribute("xyz",  1.5, -1.1, 0 );
-        graph.getNode("C").setAttribute("xyz",  0.1, 1.3, 0 );
-        graph.getNode("D").setAttribute("xyz",  0, 0, 0 );
+        graph.addEdge("CD1", "C", "D1", true);
+        graph.addEdge("D2C", "D2", "C", true);
+        graph.addEdge("BD3", "B", "D3", true);
+        graph.addEdge("D4B", "D4", "B", true);
+        graph.addEdge("AD5", "A", "D5", true);
+        graph.addEdge("D6A", "D6", "A", true);
+
+        graph.addEdge("D1D6", "D1", "D6", true);
+        graph.addEdge("D1D4", "D1", "D4", true);
+        graph.addEdge("D5D2", "D5", "D2", true);
+        graph.addEdge("D3D2", "D3", "D2", true);
+        graph.addEdge("D3D6", "D3", "D6", true);
+        graph.addEdge("D5D4", "D5", "D4", true);
+
+
+        graph.getNode("A").setAttribute("xyz", -1.5, -1.1, 0.0 );
+        graph.getNode("B").setAttribute("xyz",  1.5, -1.1, 0.0 );
+        graph.getNode("C").setAttribute("xyz",  0.1, 1.5, 0.0 );
+        graph.getNode("D1").setAttribute("xyz",  -.1, 0.3, 0.0 );
+        graph.getNode("D2").setAttribute("xyz",  0.1, 0.3, 0.0 );
+        graph.getNode("D3").setAttribute("xyz",  0.25, -0.1, 0.0 );
+        graph.getNode("D4").setAttribute("xyz",  0.2, -0.3, 0.0 );
+        graph.getNode("D5").setAttribute("xyz",  -0.2, -0.3, 0.0 );
+        graph.getNode("D6").setAttribute("xyz",  -0.25, -.1, 0.0 );
+
+        addEdgeLengths(graph);
+        //showLabels(graph);
+    }
+
+    private void showLabels(Graph graph) {
+        graph.nodes().forEach(node -> node.setAttribute("ui.label", node.getId()));
+    }
+
+    private void addEdgeLengths(Graph graph) {
+        graph.edges().forEach(edge -> edge.setAttribute("length", computeEdgeLength(edge)));
+    }
+
+    private double computeEdgeLength(Edge edge) {
+        Node source = edge.getSourceNode();
+        Node target = edge.getTargetNode();
+        //System.out.println("source = "+ Arrays.toString(source.getAttribute("xyz", Object[].class)) + " target = " + target.getAttribute("xyz", Object[].class));
+
+        Object[] sourceXYZ = source.getAttribute("xyz", Object[].class);
+        Object[] targetXYZ = target.getAttribute("xyz", Object[].class);
+
+        return Math.sqrt(Math.pow((double)targetXYZ[0] - (double)sourceXYZ[0], 2) + Math.pow((double)targetXYZ[1] - (double)sourceXYZ[1], 2));
     }
 
     private String loadStyleSheet() {

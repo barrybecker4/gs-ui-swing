@@ -7,15 +7,18 @@ import org.graphstream.ui.spriteManager.Sprite;
 import org.graphstream.ui.spriteManager.SpriteManager;
 
 class VehicleSprite extends Sprite {
-    double dir = 0.01f;
+
+    private static final double STEP_PERCENT = 0.005d;
+    double step = STEP_PERCENT;
 
     public VehicleSprite(String identifier, SpriteManager manager) {
         super(identifier, manager);
     }
 
     public void move() {
+
         double p = getX();
-        p += dir;
+        p += step;
 
         if (p < 0 || p > 1)
             chooseNextEdge();
@@ -26,23 +29,29 @@ class VehicleSprite extends Sprite {
     public void chooseNextEdge() {
         Edge edge = (Edge) getAttachment();
         Node node = edge.getSourceNode();
-        if (dir > 0)
+        if (step > 0)
             node = edge.getTargetNode();
 
-
-        Edge next = randomEdge(node, edge);
+        Edge nextEdge = randomEdge(node, edge);
         double pos = 0;
 
-        if (node == next.getSourceNode()) {
-            dir = 0.01f;
+        if (node == nextEdge.getSourceNode()) {
+            step = calculateIncrement(nextEdge);
             pos = 0;
         } else {
-            dir = -0.01f;
+            step = -calculateIncrement(nextEdge);
             pos = 1;
         }
 
-        attachToEdge(next.getId());
+        attachToEdge(nextEdge.getId());
         setPosition(pos);
+    }
+
+    /** Move in larger percentage steps across shorter edges */
+    private double calculateIncrement(Edge edge) {
+        double edgeLen = edge.getAttribute("length", Double.class);
+        double scale = 3.0 / edgeLen;
+        return STEP_PERCENT * scale;
     }
 
     /**
