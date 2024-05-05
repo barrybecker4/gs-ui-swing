@@ -119,7 +119,7 @@ public class TestManySprite implements ViewerListener {
 	private void moveSprites() {
 		 sprites.forEach( s -> ((TestSprite)s).move() );	
 	}
-	
+
 
 	private void addSprites() {
 		sprites = new SpriteManager( graph );

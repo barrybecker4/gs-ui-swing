@@ -113,6 +113,9 @@ public class Connector extends HasSkel {
 		if(element.hasAttribute("ui.points")) {
 			skel.setPoly(element.getAttribute("ui.points"));
 		} else {
+            if(element.hasAttribute("ui.control-point")) {
+                skel.setControlPoint(element.getAttribute("ui.control-point", Point3.class));
+            }
 			positionForLinesAndCurves( skel, element.from.getStyle(), element.from, 
 					element.to, element.multi, element.getGroup() );
 		}

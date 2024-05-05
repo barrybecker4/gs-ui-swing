@@ -31,16 +31,17 @@
   
 package org.graphstream.ui.swing.renderer.shape.swing.advancedShapes;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Path2D;
-
+import org.graphstream.ui.geom.Point3;
 import org.graphstream.ui.geom.Vector2;
 import org.graphstream.ui.graphicGraph.GraphicElement;
 import org.graphstream.ui.swing.Backend;
-import org.graphstream.ui.view.camera.DefaultCamera2D;
 import org.graphstream.ui.swing.renderer.Skeleton;
 import org.graphstream.ui.swing.renderer.shape.swing.ShowCubics;
 import org.graphstream.ui.swing.renderer.shape.swing.baseShapes.LineConnectorShape;
+import org.graphstream.ui.view.camera.DefaultCamera2D;
+
+import java.awt.Graphics2D;
+import java.awt.geom.Path2D;
 
 public class CubicCurveShape extends LineConnectorShape {
 	ShowCubics showCubics ;
@@ -56,12 +57,12 @@ public class CubicCurveShape extends LineConnectorShape {
 	}
 
 	private void make(DefaultCamera2D camera, double sox, double soy, double swx, double swy) {
-		if (skel.multi() > 1 || skel.isLoop()) // is a loop or a multi edge
-            makeMultiOrLoop(camera, sox, soy, swx, swy);
-       else if(skel.isPoly() && skel.size() == 4)
-            makeFromPoints(camera, sox, soy, swx, swy); // has points positions
+       if (skel.multi() > 1 || skel.isLoop()) // is a loop or a multi edge
+           makeMultiOrLoop(camera, sox, soy, swx, swy);
+       else if (skel.isPoly() && skel.size() == 4)
+           makeFromPoints(camera, sox, soy, swx, swy); // has points positions
        else 
-    	   makeSingle(camera, sox, soy, swx, swy); // is a single edge.
+           makeSingle(camera, sox, soy, swx, swy); // is a single edge.
 	}
 
 	private void makeMultiOrLoop(DefaultCamera2D camera, double sox, double soy, double swx, double swy) {
@@ -132,24 +133,32 @@ public class CubicCurveShape extends LineConnectorShape {
 		Vector2 mainDir = new Vector2(skel.from(), skel.to());
         double length = mainDir.length();
         double angle = mainDir.y() / length;
-        double c1x = 0.0;
-        double c1y = 0.0;
-        double c2x = 0.0;
-        double c2y = 0.0;
+        double c1x;
+        double c1y;
+        double c2x;
+        double c2y;
 
-        if (angle > 0.707107f || angle < -0.707107f) {
-            // North or south.
-            c1x = fromx + mainDir.x() / 2;
-            c2x = c1x;
-            c1y = fromy;
-            c2y = toy;
-        } 
-        else {
-            // East or west.
-            c1x = fromx;
-            c2x = tox;
-            c1y = fromy + mainDir.y() / 2;
-            c2y = c1y;
+        if (skel.getControlPoint() != null) {
+            Point3 controlPoint = skel.getControlPoint();
+            c1x = controlPoint.x;
+            c1y = controlPoint.y;
+            c2x = controlPoint.x;
+            c2y = controlPoint.y;
+        } else {
+            if (angle > 0.707107f || angle < -0.707107f) {
+                // North or south.
+                c1x = fromx + mainDir.x() / 2;
+                c1y = fromy;
+                c2x = c1x;
+                c2y = toy;
+            }
+            else {
+                // East or west.
+                c1x = fromx;
+                c1y = fromy + mainDir.y() / 2;
+                c2x = tox;
+                c2y = c1y;
+            }
         }
 
         theShape.reset();
@@ -192,7 +201,7 @@ public class CubicCurveShape extends LineConnectorShape {
 		//	 		g.setStroke( s );
 		//	 		g.setColor( c );
 		//	 		showCtrlPoints( g, camera )
-		// 		}		
+		// 		}
 	}
 
 	@Override
