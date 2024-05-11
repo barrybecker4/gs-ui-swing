@@ -35,8 +35,8 @@ class VehicleSprite extends Sprite {
         if (step > 0)
             node = edge.getTargetNode();
 
-        Edge nextEdge = randomEdge(node, edge);
-        double pos = 0;
+        Edge nextEdge = randomEdge(node);
+        double pos;
 
         if (node == nextEdge.getSourceNode()) {
             step = calculateIncrement(nextEdge);
@@ -60,7 +60,7 @@ class VehicleSprite extends Sprite {
     /**
      * select an edge other than the one we came from
      */
-    private Edge randomEdge(Node node, Edge fromEdge) {
+    private Edge randomEdge(Node node) {
         int rand = (int) (Math.random() * node.getOutDegree());
         return node.getLeavingEdge(rand);
     }
