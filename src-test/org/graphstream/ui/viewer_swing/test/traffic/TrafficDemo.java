@@ -2,7 +2,6 @@ package org.graphstream.ui.viewer_swing.test.traffic;
 
 import org.graphstream.graph.Graph;
 import org.graphstream.ui.view.Viewer;
-import org.graphstream.ui.view.ViewerListener;
 import org.graphstream.ui.view.ViewerPipe;
 import org.graphstream.ui.viewer_swing.test.traffic.vehicles.VehicleSpriteGenerator;
 
@@ -11,36 +10,35 @@ import java.awt.Dimension;
 import java.awt.Frame;
 
 
-public class TrafficDemo implements ViewerListener {
-    
-    public static void main(String[] args) {
-        System.setProperty("org.graphstream.ui", "org.graphstream.ui.swing.util.Display");
-        (new TrafficDemo()).run();
-    }
+public class TrafficDemo {
 
-    int SPRITE_COUNT = 100;
+    private final int numSprites;
+
+    public TrafficDemo(int numSprites) {
+        this.numSprites = numSprites;
+    }
     
     /** The application runs while this is true. */
-    boolean loop = true;
     
-    private void run() {
+    void run() {
         Graph graph = new TrafficGraphGenerator().generateGraph();
 
         Viewer viewer = graph.display(false );
+        ViewerAdapter viewerListener = new ViewerAdapter();
 
         setViewerSize(1200, 900, viewer);
 
         ViewerPipe pipeIn = viewer.newViewerPipe();
 
         pipeIn.addAttributeSink( graph );
-        pipeIn.addViewerListener( this );
+        pipeIn.addViewerListener( new ViewerAdapter() );
         pipeIn.pump();
 
         sleep( 1000 );
-        VehicleSpriteGenerator spriteGenerator = new VehicleSpriteGenerator(SPRITE_COUNT);
+        VehicleSpriteGenerator spriteGenerator = new VehicleSpriteGenerator(numSprites);
         spriteGenerator.addSprites(graph);
 
-        while( loop ) {
+        while( viewerListener.isLooping() ) {
             pipeIn.pump();
             spriteGenerator.moveSprites();
             sleep( 10 );
@@ -62,10 +60,4 @@ public class TrafficDemo implements ViewerListener {
         } catch (InterruptedException e) { e.printStackTrace(); }
     }
 
-    // Viewer Listener Interface
-    public void viewClosed( String id ) { loop = false; }
-    public void buttonPushed( String id ) {}
-    public void buttonReleased( String id ) {}
-    public void mouseOver(String id){}
-    public void mouseLeft(String id){}
 }
