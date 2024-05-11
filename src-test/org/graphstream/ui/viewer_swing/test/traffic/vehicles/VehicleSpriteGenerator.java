@@ -1,4 +1,4 @@
-package org.graphstream.ui.viewer_swing.test.traffic;
+package org.graphstream.ui.viewer_swing.test.traffic.vehicles;
 
 import org.graphstream.graph.Graph;
 import org.graphstream.ui.spriteManager.SpriteManager;
@@ -14,7 +14,7 @@ public class VehicleSpriteGenerator {
         this.numSprites = numSprites;
     }
 
-    void addSprites(Graph graph) {
+    public void addSprites(Graph graph) {
         sprites = new SpriteManager(graph);
         sprites.setSpriteFactory( new VehicleSpriteFactory() );
 
@@ -24,7 +24,7 @@ public class VehicleSpriteGenerator {
         new VehiclePlacer().placeVehicleSprites(sprites, graph);
     }
 
-    void moveSprites() {
+    public void moveSprites() {
         sprites.forEach( s -> ((VehicleSprite)s).move() );
     }
 }

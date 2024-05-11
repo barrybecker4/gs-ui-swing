@@ -4,6 +4,7 @@ import org.graphstream.graph.Graph;
 import org.graphstream.ui.view.Viewer;
 import org.graphstream.ui.view.ViewerListener;
 import org.graphstream.ui.view.ViewerPipe;
+import org.graphstream.ui.viewer_swing.test.traffic.vehicles.VehicleSpriteGenerator;
 
 import javax.swing.JFrame;
 import java.awt.Dimension;

@@ -1,4 +1,4 @@
-package org.graphstream.ui.viewer_swing.test.traffic;
+package org.graphstream.ui.viewer_swing.test.traffic.vehicles;
 
 import org.graphstream.ui.graphicGraph.stylesheet.Values;
 import org.graphstream.ui.spriteManager.Sprite;
