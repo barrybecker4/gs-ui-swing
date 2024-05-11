@@ -9,7 +9,7 @@ import org.graphstream.ui.spriteManager.SpriteManager;
 class VehicleSprite extends Sprite {
 
     private static final double STEP_PERCENT = 0.005d;
-    double step = STEP_PERCENT;
+    double step = 0;
 
     public VehicleSprite(String identifier, SpriteManager manager) {
         super(identifier, manager);
@@ -18,6 +18,9 @@ class VehicleSprite extends Sprite {
     public void move() {
 
         double p = getX();
+        if (step == 0) {
+            step = calculateIncrement((Edge) getAttachment());
+        }
         p += step;
 
         if (p < 0 || p > 1)
