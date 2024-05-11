@@ -19,10 +19,10 @@ public class VehicleSpriteGenerator {
         sprites = new SpriteManager(graph);
         sprites.setSpriteFactory( new VehicleSpriteFactory() );
 
-        for( int i = 0 ; i < numSprites; i++ ) {
+        for (int i = 0; i < numSprites; i++) {
             sprites.addSprite(i + "");
         }
-        new VehiclePlacer().placeVehicleSprites(sprites, graph);
+        new VehiclePlacer(sprites, graph).placeVehicleSprites();
     }
 
     public void moveSprites() {

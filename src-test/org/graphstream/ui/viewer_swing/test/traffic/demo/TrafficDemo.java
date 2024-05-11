@@ -23,7 +23,7 @@ public class TrafficDemo {
         Graph graph = new TrafficGraphGenerator().generateGraph();
 
         Viewer viewer = graph.display(false );
-        setViewerSize(1200, 900, viewer);
+        setViewerSize(1200, 1000, viewer);
         ViewerPipe pipeIn = viewer.newViewerPipe();
 
         pipeIn.addAttributeSink( graph );

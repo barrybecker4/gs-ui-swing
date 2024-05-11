@@ -9,6 +9,8 @@ import org.graphstream.ui.spriteManager.SpriteManager;
 class VehicleSprite extends Sprite {
 
     private static final double STEP_PERCENT = 0.005d;
+    // The is dependent on the size of the window and the coordinates used to build the graph
+    private static final double SCALE = 3000.0;
     double step = 0;
 
     public VehicleSprite(String identifier, SpriteManager manager) {
@@ -53,7 +55,7 @@ class VehicleSprite extends Sprite {
     /** Move in larger percentage steps across shorter edges */
     private double calculateIncrement(Edge edge) {
         double edgeLen = edge.getAttribute("length", Double.class);
-        double scale = 3.0 / edgeLen;
+        double scale = SCALE / edgeLen;
         return STEP_PERCENT * scale;
     }
 

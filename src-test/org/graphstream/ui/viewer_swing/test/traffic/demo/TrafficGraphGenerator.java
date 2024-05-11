@@ -64,15 +64,15 @@ public class TrafficGraphGenerator {
         graph.addEdge("D5D4", "D5", "D4", true);
 
 
-        graph.getNode("A").setAttribute("xyz", -1.5, -1.1, 0.0 );
-        graph.getNode("B").setAttribute("xyz",  1.5, -1.1, 0.0 );
-        graph.getNode("C").setAttribute("xyz",  0.1, 1.5, 0.0 );
-        graph.getNode("D1").setAttribute("xyz",  -.1, 0.3, 0.0 );
-        graph.getNode("D2").setAttribute("xyz",  0.1, 0.3, 0.0 );
-        graph.getNode("D3").setAttribute("xyz",  0.25, -0.1, 0.0 );
-        graph.getNode("D4").setAttribute("xyz",  0.2, -0.3, 0.0 );
-        graph.getNode("D5").setAttribute("xyz",  -0.2, -0.3, 0.0 );
-        graph.getNode("D6").setAttribute("xyz",  -0.25, -.1, 0.0 );
+        graph.getNode("A").setAttribute("xyz", -1500d, -1100d, 0.0 );
+        graph.getNode("B").setAttribute("xyz",  1500d, -1100d, 0.0 );
+        graph.getNode("C").setAttribute("xyz",  100d, 1500d, 0.0 );
+        graph.getNode("D1").setAttribute("xyz",  -100d, 300d, 0.0 );
+        graph.getNode("D2").setAttribute("xyz",  100d, 300d, 0.0 );
+        graph.getNode("D3").setAttribute("xyz",  250d, -100d, 0.0 );
+        graph.getNode("D4").setAttribute("xyz",  200d, -300d, 0.0 );
+        graph.getNode("D5").setAttribute("xyz",  -200d, -300d, 0.0 );
+        graph.getNode("D6").setAttribute("xyz",  -250d, -100d, 0.0 );
 
         addEdgeLengths(graph);
         //showLabels(graph);
