@@ -2,6 +2,7 @@ package org.graphstream.ui.viewer_swing.test.traffic.vehicles;
 
 import org.graphstream.graph.Graph;
 import org.graphstream.ui.spriteManager.SpriteManager;
+import org.graphstream.ui.viewer_swing.test.traffic.vehicles.placement.VehiclePlacer;
 
 
 public class VehicleSpriteGenerator {

@@ -1,4 +1,4 @@
-package org.graphstream.ui.viewer_swing.test.traffic;
+package org.graphstream.ui.viewer_swing.test.traffic.demo;
 
 import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;

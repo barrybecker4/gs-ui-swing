@@ -1,5 +1,7 @@
 package org.graphstream.ui.viewer_swing.test.traffic;
 
+import org.graphstream.ui.viewer_swing.test.traffic.demo.TrafficDemo;
+
 public class TrafficApplication {
 
     private static final int SPRITE_COUNT = 100;
