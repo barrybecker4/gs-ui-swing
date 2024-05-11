@@ -59,6 +59,7 @@ public class ConnectorSkeleton extends Skeleton implements AttributeUtils, org.g
 	private boolean isACurve;
 	private int aMulti;
 	private boolean isALoop;
+    private Point3 controlPoint;
 
 	public ConnectorSkeleton() {
 		this.points = new EdgePoints(2);
@@ -114,6 +115,10 @@ public class ConnectorSkeleton extends Skeleton implements AttributeUtils, org.g
 			lengths = null ;
 		}
 	}
+
+    public void setControlPoint(Point3 controlPoint) {
+        this.controlPoint = controlPoint;
+    }
 	
 	public void setPoly(Point3[] aSetOfPoints) {
 		if (points == null || points.size() != aSetOfPoints.length) {
@@ -193,6 +198,8 @@ public class ConnectorSkeleton extends Skeleton implements AttributeUtils, org.g
 	public Point3 from() {
 		return points.get(0);
 	}
+
+    public Point3 getControlPoint() {return controlPoint; }
 	
 	/**
 	 * Total length of the polyline defined by the points.

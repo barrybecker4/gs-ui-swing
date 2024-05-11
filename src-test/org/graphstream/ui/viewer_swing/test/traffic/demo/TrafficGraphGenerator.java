@@ -4,6 +4,7 @@ import org.graphstream.graph.Edge;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.MultiGraph;
+import org.graphstream.ui.geom.Point3;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -29,10 +30,10 @@ public class TrafficGraphGenerator {
     }
 
     private void populateGraph(Graph graph) {
+        Edge edge;
         graph.addNode("A");
         graph.addNode("B");
         graph.addNode("C");
-        //graph.addNode("D");
 
         graph.addEdge("AB", "A", "B", true);
         graph.addEdge("BA", "B", "A", true);
@@ -49,21 +50,6 @@ public class TrafficGraphGenerator {
         graph.addNode("D5");
         graph.addNode("D6");
 
-        graph.addEdge("CD1", "C", "D1", true);
-        graph.addEdge("D2C", "D2", "C", true);
-        graph.addEdge("BD3", "B", "D3", true);
-        graph.addEdge("D4B", "D4", "B", true);
-        graph.addEdge("AD5", "A", "D5", true);
-        graph.addEdge("D6A", "D6", "A", true);
-
-        graph.addEdge("D1D6", "D1", "D6", true);
-        graph.addEdge("D1D4", "D1", "D4", true);
-        graph.addEdge("D5D2", "D5", "D2", true);
-        graph.addEdge("D3D2", "D3", "D2", true);
-        graph.addEdge("D3D6", "D3", "D6", true);
-        graph.addEdge("D5D4", "D5", "D4", true);
-
-
         graph.getNode("A").setAttribute("xyz", -1500d, -1100d, 0.0 );
         graph.getNode("B").setAttribute("xyz",  1500d, -1100d, 0.0 );
         graph.getNode("C").setAttribute("xyz",  100d, 1500d, 0.0 );
@@ -73,6 +59,34 @@ public class TrafficGraphGenerator {
         graph.getNode("D4").setAttribute("xyz",  200d, -300d, 0.0 );
         graph.getNode("D5").setAttribute("xyz",  -200d, -300d, 0.0 );
         graph.getNode("D6").setAttribute("xyz",  -250d, -100d, 0.0 );
+
+        edge = graph.addEdge("CD1", "C", "D1", true);
+        edge.setAttribute("ui.control-point", new Point3(-100.0d, 500.0d, 0.0));
+        graph.addEdge("D2C", "D2", "C", true);
+
+        edge = graph.addEdge("BD3", "B", "D3", true);
+        edge.setAttribute("ui.control-point", new Point3(1000.0d, -600.0d, 0.0));
+        edge = graph.addEdge("D4B", "D4", "B", true);
+        edge.setAttribute("ui.control-point", new Point3(1000.0d, -600.0d, 0.0));
+
+        edge = graph.addEdge("AD5", "A", "D5", true);
+        edge.setAttribute("ui.control-point", new Point3(-1000.0d, -600.0d, 0.0));
+        edge = graph.addEdge("D6A", "D6", "A", true);
+        edge.setAttribute("ui.control-point", new Point3(-700.0d, -300.0d, 0.0));
+
+        edge = graph.addEdge("D1D6", "D1", "D6", true);
+        edge.setAttribute("ui.control-point", new Point3(-100.0d, 100.0d, 0.0));
+        edge = graph.addEdge("D1D4", "D1", "D4", true);
+        edge.setAttribute("ui.control-point", new Point3(0.0d, -0.0d, 0.0));
+        edge = graph.addEdge("D5D2", "D5", "D2", true);
+        edge.setAttribute("ui.control-point", new Point3(0.0d, 0.0d, 0.0));
+        edge = graph.addEdge("D3D2", "D3", "D2", true);
+        edge.setAttribute("ui.control-point", new Point3(100.0d, 100.0d, 0.0));
+        edge = graph.addEdge("D3D6", "D3", "D6", true);
+        edge.setAttribute("ui.control-point", new Point3(0.0d, 0.0d, 0.0));
+        edge = graph.addEdge("D5D4", "D5", "D4", true);
+        edge.setAttribute("ui.control-point", new Point3(0.0d, -240.0d, 0.0));
+
 
         addEdgeLengths(graph);
         //showLabels(graph);
