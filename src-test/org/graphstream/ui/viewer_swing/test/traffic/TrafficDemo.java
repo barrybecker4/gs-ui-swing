@@ -12,32 +12,31 @@ import java.awt.Frame;
 
 public class TrafficDemo {
 
-    private final int numSprites;
+    private final ViewerAdapter viewerListener = new ViewerAdapter();
+    private final VehicleSpriteGenerator spriteGenerator;
 
     public TrafficDemo(int numSprites) {
-        this.numSprites = numSprites;
+        this.spriteGenerator = new VehicleSpriteGenerator(numSprites);
     }
-    
-    /** The application runs while this is true. */
     
     void run() {
         Graph graph = new TrafficGraphGenerator().generateGraph();
 
         Viewer viewer = graph.display(false );
-        ViewerAdapter viewerListener = new ViewerAdapter();
-
         setViewerSize(1200, 900, viewer);
-
         ViewerPipe pipeIn = viewer.newViewerPipe();
 
         pipeIn.addAttributeSink( graph );
-        pipeIn.addViewerListener( new ViewerAdapter() );
+        pipeIn.addViewerListener( viewerListener );
         pipeIn.pump();
 
-        sleep( 1000 );
-        VehicleSpriteGenerator spriteGenerator = new VehicleSpriteGenerator(numSprites);
+        sleep( 1000 ); // give a chance to layout
         spriteGenerator.addSprites(graph);
 
+        simulateTrafficFlow(pipeIn);
+    }
+
+    private void simulateTrafficFlow(ViewerPipe pipeIn) {
         while( viewerListener.isLooping() ) {
             pipeIn.pump();
             spriteGenerator.moveSprites();
